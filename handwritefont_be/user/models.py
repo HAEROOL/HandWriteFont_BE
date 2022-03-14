@@ -1,6 +1,3 @@
-from distutils.command.upload import upload
-from distutils.log import error
-from statistics import mode
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
@@ -47,10 +44,19 @@ class HWFUser(AbstractBaseUser):
     objects = HWFUserManager()
 
     # 사용자의 username field는 nickname으로 설정
-    USERNAME_FIELD = 'nickname'
+    USERNAME_FIELD = 'email'
     # 필수로 작성해야하는 field
-    REQUIRED_FIELDS = ['email', 'name']
+    REQUIRED_FIELDS = ['nickname', 'name']
 
+    @property
+    def is_staff(self):
+        return self.is_admin
 
     def __str__(self):
-        return self.name
+        return self.email
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
