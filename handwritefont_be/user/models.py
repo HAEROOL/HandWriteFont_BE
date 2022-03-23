@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Create your models here. 
 class HWFUserManager(BaseUserManager):
@@ -30,7 +30,7 @@ class HWFUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class HWFUser(AbstractBaseUser):
+class HWFUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(default ='', max_length=100, unique=True, primary_key=True)
     name = models.CharField(max_length = 30)
     nickname = models.CharField(max_length=50, unique=True,default="NickName")
