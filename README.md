@@ -18,3 +18,5 @@
         "password" : "admin"
     }
 ```
+
+-로그인 실패시에는 token 값을 NULL 값으로 설정하여 보내기-
