@@ -29,6 +29,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
         model = HWFUser
         fields = ['nickname','name','email','password']
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.CharField(max_length=64)
     password = serializers.CharField(write_only =True)

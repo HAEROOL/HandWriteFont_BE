@@ -14,10 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-from .views import HWFUserCreate, signin
+from .views import FontListView, FontView
 
 urlpatterns = [
-    path('signup/', HWFUserCreate.as_view()),
-    path('signin/', signin),
-    path('api-auth/', include('rest_framework.urls'))
+    path('<str:pk>/', FontListView.as_view()),
+    path('<str:pk>/', FontView.as_view())
 ]
