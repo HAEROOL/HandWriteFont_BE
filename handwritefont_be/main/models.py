@@ -3,7 +3,7 @@ from django.db import models
 from user.models import HWFUser
 
 def user_directory_path(instance, filename):
-    return 'font/{0}/{1}'.format(instance.owner.nickname, filename)
+    return 'media/font/{0}/{1}'.format(instance.owner.nickname, filename)
 
 class Font(models.Model):
     name = models.CharField(primary_key=True, max_length=20)
