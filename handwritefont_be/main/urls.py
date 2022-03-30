@@ -17,6 +17,6 @@ from django.urls import path, include
 from .views import FontListView, FontView
 
 urlpatterns = [
-    path('<str:pk>/', FontListView.as_view()),
+    path('', FontListView.as_view()),
     path('<str:pk>/', FontView.as_view())
 ]
