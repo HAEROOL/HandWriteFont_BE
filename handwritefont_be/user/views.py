@@ -1,13 +1,22 @@
 from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny, IsAdminUser
 
-from .serializers import UserCreateSerializer, UserLoginSerializer
+from .serializers import UserCreateSerializer, UserLoginSerializer,UserSerializer
 from .models import HWFUser
-from rest_framework import generics
 
+@permission_classes([IsAdminUser])
+class HWFUserListView(generics.ListAPIView):
+    queryset = HWFUser.objects.all()
+    serializer_class = UserSerializer
+    
+class HWFUserView(generics.RetrieveAPIView):
+    queryset = HWFUser.objects.all()
+    serializer_class = UserSerializer
+
+@permission_classes([AllowAny])
 class HWFUserCreate(generics.CreateAPIView):
     queryset = HWFUser.objects.all()
     serializer_class = UserCreateSerializer
