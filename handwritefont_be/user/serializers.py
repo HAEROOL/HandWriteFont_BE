@@ -21,13 +21,14 @@ class UserCreateSerializer(serializers.ModelSerializer):
             email = validated_data['email'],
             nickname = validated_data['nickname'],
             name = validated_data['name'],
+            profile_image = validated_data['profile_image']
         )
         user.set_password(validated_data['password'])
         user.save()
         return user
     class Meta:
         model = HWFUser
-        fields = ['nickname','name','email','password']
+        fields = ['nickname','name','email','password','profile_image']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
