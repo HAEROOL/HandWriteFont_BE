@@ -1,5 +1,52 @@
 ## 📝 Hand Write Font Back-End
 
+## Set
+
+### Install
+
+#### Git Clone
+```
+    $ git clone https://github.com/LIkelion-at-KOREATECH/ToMagGeul.git
+```
+
+#### Create Venv
+```
+    $ python -m venv venv
+```
+
+#### Activate Venv
+```
+    Mac
+    $ source venv/bin/activate
+    
+    Window
+    $ source venv/Scripts/activate
+```
+
+#### Requirements Install
+```
+    $ pip install -r requirements.txt 
+```
+
+#### Settings.py -> secrets.json 생성
+```
+    {
+    "SECRET_KEY": "*******************"
+    }
+```
+
+#### Migration
+```
+    $ python manage.py makemigrations
+    $ python manage.py migrate
+```
+
+#### Run Server
+```
+    $ python manage.py runserver
+```
+
+## Sample
 
 ### SingIn Sample Data
 ```
