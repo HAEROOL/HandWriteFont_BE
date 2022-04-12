@@ -6,7 +6,7 @@
 
 #### Git Clone
 ```
-    $ git clone https://github.com/LIkelion-at-KOREATECH/ToMagGeul.git
+    $ git clone https://github.com/Woo-Yeol/HandWriteFont_BE.git
 ```
 
 #### Create Venv
