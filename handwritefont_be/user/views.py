@@ -16,10 +16,18 @@ class HWFUserView(generics.RetrieveAPIView):
     queryset = HWFUser.objects.all()
     serializer_class = UserSerializer
 
-@permission_classes([AllowAny])
-class HWFUserCreate(generics.CreateAPIView):
-    queryset = HWFUser.objects.all()
-    serializer_class = UserCreateSerializer
+# @permission_classes([AllowAny])
+# class HWFUserCreate(generics.CreateAPIView):
+#     queryset = HWFUser.objects.all()
+#     serializer_class = UserCreateSerializer
+
+@api_view(['POST']) 
+@permission_classes([AllowAny]) # 인증 필요없다
+def signup(request):
+    serializer = UserCreateSerializer(data=request.data) 
+    if serializer.is_valid(raise_exception=True):
+        serializer.save() # DB 저장
+        return Response(serializer.data, status=201) 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])

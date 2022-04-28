@@ -5,13 +5,7 @@ from .models import HWFUser
 
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.models import update_last_login
-
-User = get_user_model()
-JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
-JWT_ENCODE_HANDLER = api_settings.JWT_ENCODE_HANDLER
-JWT_ALLOW_REFRESH = api_settings.JWT_ALLOW_REFRESH
-JWT_DECODE_HANDLER = api_settings.JWT_DECODE_HANDLER
-JWT_PAYLOAD_GET_USER_ID_HANDLER = api_settings.JWT_PAYLOAD_GET_USER_ID_HANDLER
+import jwt
 
 User = get_user_model()
 
@@ -51,8 +45,7 @@ class UserLoginSerializer(serializers.Serializer):
             }
         
         try:
-            payload = JWT_PAYLOAD_HANDLER(user)
-            jwt_token = JWT_ENCODE_HANDLER(payload)
+            # jwt_token = jwt.encode(user, SECRET)
             update_last_login(None, user)
 
         except User.DoesNotExist:
