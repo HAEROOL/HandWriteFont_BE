@@ -9,6 +9,22 @@ import jwt
 
 User = get_user_model()
 
+from rest_framework import serializers
+from dj_rest_auth.registration.serializers import RegisterSerializer
+
+
+class CustomRegisterSerializer(RegisterSerializer):
+    # 기본 설정 필드: username, password, email
+    # 추가 설정 필드: profile_image, nickname
+    profile_image = serializers.ImageField(use_url=True)
+    nickname = serializers.CharField(max_length=50, allow_blank=True)
+
+    def get_cleaned_data(self):
+        data = super().get_cleaned_data()
+        data['profile_image'] = self.validated_data.get('profile_image', '')
+        data['nickname'] = self.validated_data.get('nickname', '')
+        return data
+
 class UserCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = HWFUser.objects.create(

@@ -78,13 +78,22 @@ JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 
 SITE_ID = 1
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'name'
+ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_LOGOUT_ON_GET = True
+LOGOUT_ON_PASSWORD_CHANGE = True
+REST_USE_JWT = True
 AUTH_USER_MODEL = 'user.HWFUser'
-
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'email',
+}
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'user.serializers.CustomRegisterSerializer',
+}
+ACCOUNT_ADAPTER = 'user.adapters.CustomAccountAdapter'
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -103,21 +112,21 @@ REST_FRAMEWORK = {
 
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
 
-JWT_AUTH = {
+# JWT_AUTH = {
 
-    'JWT_SECRET_KEY': SECRET_KEY,
-    'JWT_ALGORITHM': 'HS256',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),
-}
+#     'JWT_SECRET_KEY': SECRET_KEY,
+#     'JWT_ALGORITHM': 'HS256',
+#     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
+#     'JWT_ALLOW_REFRESH': True,
+#     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
