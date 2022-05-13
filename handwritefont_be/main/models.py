@@ -11,7 +11,7 @@ class Font(models.Model):
     name = models.CharField(primary_key=True, max_length=20)
     created_date = models.DateField(auto_now_add=True)
     like_users = models.ManyToManyField(HWFUser, blank=True, related_name='like')
-    owner = models.ForeignKey(HWFUser, related_name='font', on_delete=models.CASCADE)
+    owner = models.ForeignKey(HWFUser, related_name='fonts', on_delete=models.CASCADE)
     file = models.FileField(upload_to=user_directory_path,null=True,blank=True)
     status = models.CharField(max_length=10, choices=status_field(), default='Canceled')
 

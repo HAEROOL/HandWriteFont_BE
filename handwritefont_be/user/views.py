@@ -1,12 +1,23 @@
 # V1 Import List
+# from rest_framework import generics
+# from rest_framework import status
+# from rest_framework.response import Response
+# from rest_framework.decorators import api_view, permission_classes
+# from rest_framework.permissions import AllowAny, IsAdminUser
+# from .serializers import UserCreateSerializer, UserLoginSerializer,UserSerializer
+# from .models import HWFUser
+# V2 Import List
 from rest_framework import generics
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAdminUser
-from .serializers import UserCreateSerializer, UserLoginSerializer,UserSerializer
+from .serializers import UserSerializer
 from .models import HWFUser
+from main.models import Font
 
+# V2 User View
+
+# 유저 디테일 페이지 데이터 GET, PUT, PATCH
+class HWFUserDetail(generics.RetrieveUpdateAPIView):
+    queryset = HWFUser.objects.all()
+    serializer_class = UserSerializer
 
 # V1 User View
 

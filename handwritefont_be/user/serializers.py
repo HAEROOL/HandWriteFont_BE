@@ -11,6 +11,8 @@ import jwt
 # V2 Import list
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from .models import HWFUser
+
 
 # V2 User Serializer
 class CustomRegisterSerializer(RegisterSerializer):
@@ -25,6 +27,11 @@ class CustomRegisterSerializer(RegisterSerializer):
         data['nickname'] = self.validated_data.get('nickname', '')
         return data
 
+class UserSerializer(serializers.ModelSerializer):
+    fonts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    class Meta:
+        model = HWFUser
+        exclude = ['last_login','is_active','is_admin','is_superuser','groups','user_permissions','password']
 
 # V1 User Serializer
 
@@ -43,10 +50,7 @@ class CustomRegisterSerializer(RegisterSerializer):
 #         model = HWFUser
 #         fields = ['nickname','name','email','password','profile_image']
 
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = '__all__'
+
 
 # class UserLoginSerializer(serializers.Serializer):
 #     email = serializers.CharField(max_length=64)

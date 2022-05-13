@@ -16,4 +16,3 @@ class FontListView(ListCreateAPIView):
 class FontView(RetrieveAPIView):
     queryset = Font.objects.all()
     serializer_class = FontSerializer
-

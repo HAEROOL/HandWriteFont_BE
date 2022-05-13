@@ -18,5 +18,5 @@ from .views import FontListView, FontView
 
 urlpatterns = [
     path('', FontListView.as_view()),
-    path('<str:pk>/', FontView.as_view())
+    path('<str:pk>/', FontView.as_view()),
 ]
