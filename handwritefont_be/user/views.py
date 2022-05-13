@@ -1,11 +1,14 @@
+# V1 Import List
 from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAdminUser
-
 from .serializers import UserCreateSerializer, UserLoginSerializer,UserSerializer
 from .models import HWFUser
+
+
+# V1 User View
 
 # @permission_classes([IsAdminUser])
 # class HWFUserListView(generics.ListAPIView):

@@ -90,6 +90,10 @@ REST_USE_JWT = True
 AUTH_USER_MODEL = 'user.HWFUser'
 SIMPLE_JWT = {
     'USER_ID_FIELD': 'email',
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'user.serializers.CustomRegisterSerializer',
@@ -116,6 +120,7 @@ REST_FRAMEWORK = {
         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
@@ -132,14 +137,14 @@ REST_FRAMEWORK = {
 
 ############################################################################################################
 
-# CORS 권한 
-CORS_ALLOW_ALL_ORIGINS = True # <- 모든 호스트 허용
+# # CORS 권한 
+# CORS_ALLOW_ALL_ORIGINS = True # <- 모든 호스트 허용
 
 # or 
-# CORS_ALLOWED_ORIGINS = [
-# "http://localhost:3000",
-# "http://127.0.0.1:3000"
-# ]
+CORS_ALLOWED_ORIGINS = [
+"http://localhost:3000",
+"http://127.0.0.1:3000"
+]
 
 # CORS_ALLOW_CREDENTIALS가 True인 경우, 쿠키가 cross-site HTTP 요청에 포함될 수 있다. 기본값은 False이다.
 CORS_ALLOW_CREDENTIALS = True

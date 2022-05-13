@@ -1,3 +1,4 @@
+# V1 Import list
 from dataclasses import field
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
@@ -7,12 +8,11 @@ from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.models import update_last_login
 import jwt
 
-User = get_user_model()
-
+# V2 Import list
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
-
+# V2 User Serializer
 class CustomRegisterSerializer(RegisterSerializer):
     # 기본 설정 필드: username, password, email
     # 추가 설정 필드: profile_image, nickname
@@ -25,50 +25,53 @@ class CustomRegisterSerializer(RegisterSerializer):
         data['nickname'] = self.validated_data.get('nickname', '')
         return data
 
-class UserCreateSerializer(serializers.ModelSerializer):
-    def create(self, validated_data):
-        user = HWFUser.objects.create(
-            email = validated_data['email'],
-            nickname = validated_data['nickname'],
-            name = validated_data['name'],
-            profile_image = validated_data['profile_image']
-        )
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
-    class Meta:
-        model = HWFUser
-        fields = ['nickname','name','email','password','profile_image']
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
+# V1 User Serializer
 
-class UserLoginSerializer(serializers.Serializer):
-    email = serializers.CharField(max_length=64)
-    password = serializers.CharField(write_only =True)
-    token = serializers.CharField(max_length=255, read_only=True)
+# class UserCreateSerializer(serializers.ModelSerializer):
+#     def create(self, validated_data):
+#         user = HWFUser.objects.create(
+#             email = validated_data['email'],
+#             nickname = validated_data['nickname'],
+#             name = validated_data['name'],
+#             profile_image = validated_data['profile_image']
+#         )
+#         user.set_password(validated_data['password'])
+#         user.save()
+#         return user
+#     class Meta:
+#         model = HWFUser
+#         fields = ['nickname','name','email','password','profile_image']
+
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = '__all__'
+
+# class UserLoginSerializer(serializers.Serializer):
+#     email = serializers.CharField(max_length=64)
+#     password = serializers.CharField(write_only =True)
+#     token = serializers.CharField(max_length=255, read_only=True)
 
 
-    def validate(self, data):
-        email = data['email']
-        password = data['password']
-        user = authenticate(email = email, password=password)
-        if user is None:
-            return {
-                'email' : 'None'
-            }
+#     def validate(self, data):
+#         email = data['email']
+#         password = data['password']
+#         user = authenticate(email = email, password=password)
+#         if user is None:
+#             return {
+#                 'email' : 'None'
+#             }
         
-        try:
-            # jwt_token = jwt.encode(user, SECRET)
-            update_last_login(None, user)
+#         try:
+#             # jwt_token = jwt.encode(user, SECRET)
+#             update_last_login(None, user)
 
-        except User.DoesNotExist:
-            raise serializers.ValidationError(
-                '잘못된 아이디 또는 패스워드 입니다.'
-            )
-        return {
-            'email': user.email,
-            'token':jwt_token
-        }
+#         except User.DoesNotExist:
+#             raise serializers.ValidationError(
+#                 '잘못된 아이디 또는 패스워드 입니다.'
+#             )
+#         return {
+#             'email': user.email,
+#             'token':jwt_token
+#         }
