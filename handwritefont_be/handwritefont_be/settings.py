@@ -98,14 +98,17 @@ SIMPLE_JWT = {
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'user.serializers.CustomRegisterSerializer',
 }
+REST_AUTH_REGISTER_PERMISSION_CLASSES = (
+    'rest_framework.permissions.AllowAny',
+)
 ACCOUNT_ADAPTER = 'user.adapters.CustomAccountAdapter'
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
-        'rest_framework.permissions.IsAdminUser', # 관리자만 접근 가능
         'rest_framework.permissions.AllowAny', # 누구나 접근 가능
+        # 'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
+        # 'rest_framework.permissions.IsAdminUser', # 관리자만 접근 가능
 
     ),
 

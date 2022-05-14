@@ -19,9 +19,9 @@ from .views import HWFUserDetail
 
 urlpatterns = [
     path('', include('dj_rest_auth.urls')),
+    path('registration/',include('dj_rest_auth.registration.urls')),
     # path('list/', HWFUserListView.as_view()),
     path('<str:pk>/', HWFUserDetail.as_view()),
-    path('registration/',include('dj_rest_auth.registration.urls')),
     path('api-auth/', include('rest_framework.urls'))
 ]
 
