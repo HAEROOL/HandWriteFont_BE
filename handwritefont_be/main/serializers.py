@@ -6,3 +6,9 @@ class FontSerializer(serializers.ModelSerializer):
     class Meta:
         model = Font
         fields = '__all__'
+
+class FontLookAroundSerializer(serializers.ModelSerializer):
+    like_num = serializers.ReadOnlyField()
+    class Meta:
+        model = Font
+        fields = ['like_num','name','file']
