@@ -11,4 +11,4 @@ class FontLookAroundSerializer(serializers.ModelSerializer):
     like_num = serializers.ReadOnlyField()
     class Meta:
         model = Font
-        fields = ['like_num','name','file']
+        fields = ['like_num','name','file','like_users']
