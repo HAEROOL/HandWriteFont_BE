@@ -8,7 +8,7 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         Saves a new `User` instance using information provided in the
         signup form.
         """
-        from  allauth.account.utils import user_email, user_field, user_username
+        from  allauth.account.utils import user_email, user_username
 
         data = form.cleaned_data
         # first_name = data.get("first_name")
@@ -17,13 +17,13 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         username = data.get("username")
         user_email(user, email)
         user_username(user, username)
-        profile_image = data.get("profile_image")
+        # profile_image = data.get("profile_image")
         nickname = data.get("nickname")
 
         if nickname:
             user.nickname = nickname
-        if profile_image:
-            user.profile_image = profile_image
+        # if profile_image:
+        #     user.profile_image = profile_image
         # if first_name:
         #     user_field(user, "first_name", first_name)
         # if last_name:

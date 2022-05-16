@@ -10,7 +10,8 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = HWFUser
-        fields = ('email', 'nickname', 'name','profile_image')
+        # fields = ('email', 'nickname', 'name','profile_image')
+        fields = ('email', 'nickname', 'name')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -32,8 +33,9 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = HWFUser
-        fields = ('email', 'password', 'nickname','name','profile_image',
+        # fields = ('email', 'password', 'nickname','name','profile_image',
+        #           'is_active', 'is_admin')
+        fields = ('email', 'password', 'nickname','name',
                   'is_active', 'is_admin')
-
     def clean_password(self):
         return self.initial["password"]

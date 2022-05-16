@@ -2,12 +2,13 @@ from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-def user_directory_path(instance, filename):
-    return 'profile/{0}/{1}'.format(instance.nickname, filename)
+# def user_directory_path(instance, filename):
+#     return 'profile/{0}/{1}'.format(instance.nickname, filename)
 
 # Create your models here. 
 class HWFUserManager(BaseUserManager):
-    def create_user(self, email,name,nickname,profile_image='',password=None):
+    # def create_user(self, email,name,nickname,profile_image='',password=None):
+    def create_user(self, email,name,nickname,password=None):
         if not email:
             raise ValueError('Must Have User Email')
         if not name:
@@ -18,19 +19,20 @@ class HWFUserManager(BaseUserManager):
             email = self.normalize_email(email),
             nickname= nickname,
             name = name,
-            profile_image = profile_image,
+            # profile_image = profile_image,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
     # 관리자 user 생성
-    def create_superuser(self, email, nickname,name,profile_image ='', password=None):
+    def create_superuser(self, email, nickname,name, password=None):
+    # def create_superuser(self, email, nickname,name,profile_image ='', password=None):
         user = self.create_user(
             email,
             password = password,
             nickname = nickname,
             name = name,
-            profile_image = profile_image,
+            # profile_image = profile_image,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -40,7 +42,7 @@ class HWFUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(default ='', max_length=100, unique=True, primary_key=True)
     name = models.CharField(max_length = 30, default='Name')
     nickname = models.CharField(max_length=50, unique=True,default="NickName")
-    profile_image = models.ImageField(upload_to=user_directory_path,default='', null=True, blank=True)
+    # profile_image = models.ImageField(upload_to=user_directory_path,default='', null=True, blank=True)
     
     # User 모델의 필수 field
     is_active = models.BooleanField(default=True)    
