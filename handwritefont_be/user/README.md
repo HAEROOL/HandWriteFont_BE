@@ -88,6 +88,9 @@ Registration
     {
     "detail": "You can use this email :)"
     }
+    {
+    "detail": "This email is alreay Used :("
+    }
     ```
 
 - /dj-rest-auth/registration/nickname-check/ (POST)
@@ -96,7 +99,10 @@ Registration
 
     response =
     ```
-{
+    {
     "detail": "You can use this NickName :)"
-}
+    }
+    {
+    "detail": "This NickName is alreay Used :("
+    }
     ```
