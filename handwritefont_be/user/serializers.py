@@ -12,12 +12,14 @@ import jwt
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from .models import HWFUser
+from main.serializers import FontPublicSerializer
 from rest_framework.validators import UniqueValidator
+from main.models import Font
 
 # V2 User Serializer
 class CustomRegisterSerializer(RegisterSerializer):
     # 기본 설정 필드: username, password, email
-    # 추가 설정 필드: profile_image, nickname
+    # 추가 설정 필드: nickname
     # profile_image = serializers.ImageField(use_url=True)
     nickname = serializers.CharField(max_length=50, allow_blank=True)
 
@@ -28,10 +30,26 @@ class CustomRegisterSerializer(RegisterSerializer):
         return data
 
 class UserSerializer(serializers.ModelSerializer):
-    fonts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # fonts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    fonts = FontPublicSerializer(many=True)
     class Meta:
         model = HWFUser
         exclude = ['last_login','is_active','is_admin','is_superuser','groups','user_permissions','password']
+
+    def update(self, instance, validated_data):
+        fonts_data = validated_data.pop('fonts')
+        fonts = (instance.fonts).all()
+        fonts = list(fonts)
+        instance.name = validated_data.get('name', instance.name)
+        instance.nickname = validated_data.get('nickname', instance.nickname)
+        instance.save()
+
+        for font_data in fonts_data:
+            font = fonts.pop(0)
+            font.public = font_data.get('public', font.public)
+            font.save()
+        return instance
+
 
 class EmailUniqueCheckSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=HWFUser.objects.all())])
@@ -39,7 +57,7 @@ class EmailUniqueCheckSerializer(serializers.ModelSerializer):
     class Meta:
         model = HWFUser
         fields = ['email']
-        
+
 class NicknameUniqueCheckSerializer(serializers.ModelSerializer):
     nickname = serializers.CharField(required=True,min_length=1, max_length=50, validators=[UniqueValidator(queryset=HWFUser.objects.all())])
 

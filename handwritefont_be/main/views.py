@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.decorators import permission_classes
 
 from .models import Font
-from .serializers import FontSerializer,FontLookAroundSerializer
+from .serializers import FontSerializer,FontLookAroundSerializer,FontPublicSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -19,12 +19,16 @@ class FontView(RetrieveAPIView):
     queryset = Font.objects.all()
     serializer_class = FontSerializer
 
+class FontView(RetrieveAPIView):
+    queryset = Font.objects.all()
+    serializer_class = FontPublicSerializer
+
 @api_view(['GET'])
 def fontview(request):
-    queryset = Font.objects.all.filter(public=True)
+    queryset = Font.objects.filter(public=True)
     name = request.query_params.get('name')
     if name is not None:
-        queryset = queryset.get(name=name)
+        queryset = queryset.get(name=name, public=True)
         serializer = FontLookAroundSerializer(queryset, context={'request':request}).data
     else:
         serializer = FontLookAroundSerializer(queryset,many=True, context={'request':request}).data
