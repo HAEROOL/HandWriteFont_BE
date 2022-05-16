@@ -12,7 +12,7 @@ import jwt
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from .models import HWFUser
-
+from rest_framework.validators import UniqueValidator
 
 # V2 User Serializer
 class CustomRegisterSerializer(RegisterSerializer):
@@ -33,6 +33,19 @@ class UserSerializer(serializers.ModelSerializer):
         model = HWFUser
         exclude = ['last_login','is_active','is_admin','is_superuser','groups','user_permissions','password']
 
+class EmailUniqueCheckSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=HWFUser.objects.all())])
+
+    class Meta:
+        model = HWFUser
+        fields = ['email']
+        
+class NicknameUniqueCheckSerializer(serializers.ModelSerializer):
+    nickname = serializers.CharField(required=True,min_length=1, max_length=50, validators=[UniqueValidator(queryset=HWFUser.objects.all())])
+
+    class Meta:
+        model = HWFUser
+        fields = ['nickname']
 # V1 User Serializer
 
 # class UserCreateSerializer(serializers.ModelSerializer):

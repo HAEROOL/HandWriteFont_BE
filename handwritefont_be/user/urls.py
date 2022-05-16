@@ -14,15 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
-from .views import HWFUserDetail
+from .views import HWFUserDetail,EmailUniqueCheck, NickNameUniqueCheck
+from main.views import Font
 # from .views import HWFUserView,HWFUserListView
 
 urlpatterns = [
     path('', include('dj_rest_auth.urls')),
     path('registration/',include('dj_rest_auth.registration.urls')),
+    path('registration/email-check/',EmailUniqueCheck.as_view()),
+    path('registration/nickname-check/',NickNameUniqueCheck.as_view()),
     # path('list/', HWFUserListView.as_view()),
     path('<str:pk>/', HWFUserDetail.as_view()),
-    path('api-auth/', include('rest_framework.urls'))
+    path('api-auth/', include('rest_framework.urls')),
 ]
 
 #  path('', include('dj_rest_auth.urls')),

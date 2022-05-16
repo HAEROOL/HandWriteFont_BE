@@ -2,7 +2,7 @@ from django.db import models
 from user.models import HWFUser
 
 def user_directory_path(instance, filename):
-    return 'media/font/{0}/{1}'.format(instance.owner.nickname, filename)
+    return 'font/{0}/{1}'.format(instance.owner.email, filename)
 
 def status_field():
     return [('Accept','Accept'),('To Do','To Do'),('Doing','Doing'),('Done','Done'),('Canceled','Canceled')]
@@ -14,6 +14,7 @@ class Font(models.Model):
     owner = models.ForeignKey(HWFUser, related_name='fonts', on_delete=models.CASCADE)
     file = models.FileField(upload_to=user_directory_path,null=True,blank=True)
     status = models.CharField(max_length=10, choices=status_field(), default='Canceled')
+    public = models.BooleanField(default=True)
 
     @property
     def like_num(self):

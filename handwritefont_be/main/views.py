@@ -21,7 +21,7 @@ class FontView(RetrieveAPIView):
 
 @api_view(['GET'])
 def fontview(request):
-    queryset = Font.objects.all()
+    queryset = Font.objects.all.filter(public=True)
     name = request.query_params.get('name')
     if name is not None:
         queryset = queryset.get(name=name)

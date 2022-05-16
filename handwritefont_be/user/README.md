@@ -77,5 +77,26 @@ Registration
     - email
     - password1
     - password2
-    - profile_image
     - NickName
+
+- /dj-rest-auth/registration/email-check/ (POST)
+
+    - email
+
+    response =
+    ```
+    {
+    "detail": "You can use this email :)"
+    }
+    ```
+
+- /dj-rest-auth/registration/nickname-check/ (POST)
+
+    - nickname
+
+    response =
+    ```
+{
+    "detail": "You can use this NickName :)"
+}
+    ```
